@@ -1,0 +1,75 @@
+2026-07-28 17:48:04 | INFO     | Database schema initialized.
+2026-07-28 17:48:04 | INFO     | Application dependencies initialized.
+2026-07-28 17:48:04 | INFO     | Bootstrap initialization completed.
+2026-07-28 17:48:05 | INFO     | Database closed successfully.
+2026-07-28 17:48:05 | INFO     | Application shutdown completed.
+2026-07-28 17:58:08 | INFO     | Database schema initialized.
+2026-07-28 17:58:08 | INFO     | Application dependencies initialized.
+2026-07-28 17:58:08 | INFO     | Bootstrap initialization completed.
+2026-07-28 17:58:08 | INFO     | Database closed successfully.
+2026-07-28 17:58:08 | INFO     | Application shutdown completed.
+2026-07-28 18:01:40 | INFO     | Database schema initialized.
+2026-07-28 18:01:40 | INFO     | Application dependencies initialized.
+2026-07-28 18:01:40 | INFO     | Bootstrap initialization completed.
+2026-07-28 18:01:41 | INFO     | Database closed successfully.
+2026-07-28 18:01:41 | INFO     | Application shutdown completed.
+2026-07-29 10:53:41 | INFO     | Database schema initialized.
+2026-07-29 10:53:41 | INFO     | Application dependencies initialized.
+2026-07-29 10:53:41 | INFO     | Bootstrap initialization completed.
+2026-07-29 10:53:41 | INFO     | Database closed successfully.
+2026-07-29 10:53:41 | INFO     | Application shutdown completed.
+2026-07-29 11:02:48 | INFO     | Database schema initialized.
+2026-07-29 11:02:48 | INFO     | Application dependencies initialized.
+2026-07-29 11:02:48 | INFO     | Bootstrap initialization completed.
+2026-07-29 11:02:49 | INFO     | Database closed successfully.
+2026-07-29 11:02:49 | INFO     | Application shutdown completed.
+2026-07-29 11:48:10 | INFO     | Database schema initialized.
+2026-07-29 11:48:10 | INFO     | Application dependencies initialized.
+2026-07-29 11:48:10 | INFO     | Bootstrap initialization completed.
+2026-07-29 11:48:11 | INFO     | Database closed successfully.
+2026-07-29 11:48:11 | INFO     | Application shutdown completed.
+2026-07-29 18:40:01 | INFO     | Closing database connection.
+2026-07-29 18:46:53 | INFO     | Closing database connection.
+2026-07-31 14:04:08 | INFO     | Page loaded: dashboard
+2026-07-31 14:04:08 | INFO     | Application Started.
+2026-07-31 14:04:17 | INFO     | Page loaded: projects
+2026-07-31 14:04:17 | INFO     | Navigate -> projects
+2026-07-31 14:04:35 | WARNING  | Page not registered: boq
+2026-07-31 14:04:35 | INFO     | Navigate -> boq
+2026-07-31 14:04:36 | INFO     | Page loaded: projects
+2026-07-31 14:04:36 | INFO     | Navigate -> projects
+2026-07-31 14:07:47 | INFO     | Application closed.
+2026-07-31 14:07:47 | INFO     | Closing database connection.
+2026-08-01 12:05:19 | INFO     | Closing database connection.
+2026-08-01 12:46:12 | INFO     | Closing database connection.
+2026-08-01 12:54:39 | INFO     | Closing database connection.
+2026-08-01 13:05:23 | INFO     | Page loaded: dashboard
+2026-08-01 13:05:23 | INFO     | Application Started.
+2026-08-01 13:05:37 | INFO     | Page loaded: dashboard
+2026-08-01 13:05:37 | INFO     | Navigate -> dashboard
+2026-08-01 13:05:39 | INFO     | Page loaded: projects
+2026-08-01 13:05:39 | INFO     | Navigate -> projects
+2026-08-01 13:05:43 | INFO     | Page loaded: boq
+2026-08-01 13:05:43 | INFO     | Navigate -> boq
+2026-08-01 13:06:07 | WARNING  | Page not registered: materials
+2026-08-01 13:06:07 | INFO     | Navigate -> materials
+2026-08-01 13:06:09 | INFO     | Page loaded: boq
+2026-08-01 13:06:09 | INFO     | Navigate -> boq
+2026-08-01 13:06:11 | INFO     | Application closed.
+2026-08-01 13:06:11 | INFO     | Closing database connection.
+2026-08-01 13:09:04 | INFO     | Page loaded: dashboard
+2026-08-01 13:09:04 | INFO     | Application Started.
+2026-08-01 13:09:10 | INFO     | Page loaded: boq
+2026-08-01 13:09:10 | INFO     | Navigate -> boq
+2026-08-01 13:22:34 | INFO     | Application closed.
+2026-08-01 13:22:35 | INFO     | Closing database connection.
+2026-08-01 15:32:46 | INFO     | Page loaded: dashboard
+2026-08-01 15:32:46 | INFO     | Application Started.
+2026-08-01 15:32:55 | INFO     | Page loaded: boq
+2026-08-01 15:32:55 | INFO     | Navigate -> boq
+2026-08-01 15:34:43 | INFO     | Application closed.
+2026-08-01 15:34:44 | INFO     | Closing database connection.
+2026-08-01 16:29:24 | INFO     | Page loaded: dashboard
+2026-08-01 16:29:24 | INFO     | Application Started.
+2026-08-01 16:29:56 | INFO     | Application closed.
+2026-08-01 16:29:56 | INFO     | Closing database connection.

@@ -1,0 +1,19 @@
+{
+    "application": {
+        "theme": "blue",
+        "appearance": "light",
+        "window_width": 1400,
+        "window_height": 850,
+        "remember_window_size": true
+    },
+    "database": {
+        "auto_backup": true,
+        "backup_interval_days": 7
+    },
+    "reports": {
+        "default_export_format": "xlsx"
+    },
+    "logging": {
+        "level": "INFO"
+    }
+}
