@@ -73,3 +73,97 @@
 2026-08-01 16:29:24 | INFO     | Application Started.
 2026-08-01 16:29:56 | INFO     | Application closed.
 2026-08-01 16:29:56 | INFO     | Closing database connection.
+2026-08-01 19:37:10 | INFO     | Page loaded: dashboard
+2026-08-01 19:37:10 | INFO     | Application Started.
+2026-08-01 19:37:24 | INFO     | Page loaded: dashboard
+2026-08-01 19:37:24 | INFO     | Navigate -> dashboard
+2026-08-01 19:37:25 | INFO     | Page loaded: projects
+2026-08-01 19:37:25 | INFO     | Navigate -> projects
+2026-08-01 19:38:11 | INFO     | Application closed.
+2026-08-01 19:38:11 | INFO     | Closing database connection.
+2026-08-02 13:17:47 | INFO     | Page loaded: dashboard
+2026-08-02 13:17:47 | INFO     | Application Started.
+2026-08-02 13:17:52 | INFO     | Page loaded: dashboard
+2026-08-02 13:17:52 | INFO     | Navigate -> dashboard
+2026-08-02 13:17:54 | INFO     | Page loaded: dashboard
+2026-08-02 13:17:54 | INFO     | Navigate -> dashboard
+2026-08-02 13:17:55 | INFO     | Page loaded: projects
+2026-08-02 13:17:55 | INFO     | Navigate -> projects
+2026-08-02 13:18:01 | INFO     | Page loaded: boq
+2026-08-02 13:18:01 | INFO     | Navigate -> boq
+2026-08-02 13:18:08 | WARNING  | Page not registered: materials
+2026-08-02 13:18:08 | INFO     | Navigate -> materials
+2026-08-02 13:18:10 | WARNING  | Page not registered: calculators
+2026-08-02 13:18:10 | INFO     | Navigate -> calculators
+2026-08-02 13:18:11 | WARNING  | Page not registered: reports
+2026-08-02 13:18:11 | INFO     | Navigate -> reports
+2026-08-02 13:18:12 | WARNING  | Page not registered: settings
+2026-08-02 13:18:12 | INFO     | Navigate -> settings
+2026-08-02 13:18:13 | INFO     | Application closed.
+2026-08-02 13:18:13 | INFO     | Closing database connection.
+2026-08-02 13:21:04 | INFO     | Page loaded: dashboard
+2026-08-02 13:21:04 | INFO     | Application Started.
+2026-08-02 13:21:07 | INFO     | Page loaded: projects
+2026-08-02 13:21:07 | INFO     | Navigate -> projects
+2026-08-02 13:22:28 | INFO     | Application closed.
+2026-08-02 13:22:28 | INFO     | Closing database connection.
+2026-08-02 15:54:08 | INFO     | Page loaded: dashboard
+2026-08-02 15:54:08 | INFO     | Application Started.
+2026-08-02 15:54:13 | INFO     | Page loaded: projects
+2026-08-02 15:54:13 | INFO     | Navigate -> projects
+2026-08-02 15:55:12 | INFO     | Application closed.
+2026-08-02 15:55:12 | INFO     | Closing database connection.
+2026-08-02 16:25:25 | INFO     | Page loaded: dashboard
+2026-08-02 16:25:25 | INFO     | Application Started.
+2026-08-02 16:25:29 | INFO     | Page loaded: projects
+2026-08-02 16:25:29 | INFO     | Navigate -> projects
+2026-08-02 16:26:41 | INFO     | Application closed.
+2026-08-02 16:26:41 | INFO     | Closing database connection.
+2026-08-03 12:34:45 | INFO     | Page loaded: dashboard
+2026-08-03 12:34:45 | INFO     | Application Started.
+2026-08-03 12:34:51 | INFO     | Page loaded: projects
+2026-08-03 12:34:51 | INFO     | Navigate -> projects
+2026-08-03 12:38:54 | INFO     | Application closed.
+2026-08-03 12:38:54 | INFO     | Closing database connection.
+2026-08-03 12:53:48 | INFO     | Page loaded: dashboard
+2026-08-03 12:53:48 | INFO     | Application Started.
+2026-08-03 12:53:55 | INFO     | Page loaded: projects
+2026-08-03 12:53:55 | INFO     | Navigate -> projects
+2026-08-03 12:55:27 | INFO     | Application closed.
+2026-08-03 12:55:27 | INFO     | Closing database connection.
+2026-08-03 13:07:39 | INFO     | Page loaded: dashboard
+2026-08-03 13:07:39 | INFO     | Application Started.
+2026-08-03 13:07:43 | INFO     | Page loaded: projects
+2026-08-03 13:07:43 | INFO     | Navigate -> projects
+2026-08-03 13:09:03 | INFO     | Application closed.
+2026-08-03 13:09:03 | INFO     | Closing database connection.
+2026-08-03 13:18:28 | INFO     | Page loaded: dashboard
+2026-08-03 13:18:28 | INFO     | Application Started.
+2026-08-03 13:18:32 | INFO     | Page loaded: projects
+2026-08-03 13:18:32 | INFO     | Navigate -> projects
+2026-08-03 13:31:06 | INFO     | Application closed.
+2026-08-03 13:31:06 | INFO     | Closing database connection.
+2026-08-03 13:32:41 | INFO     | Page loaded: dashboard
+2026-08-03 13:32:41 | INFO     | Application Started.
+2026-08-03 13:32:44 | INFO     | Page loaded: projects
+2026-08-03 13:32:44 | INFO     | Navigate -> projects
+2026-08-03 13:34:33 | INFO     | Application closed.
+2026-08-03 13:34:33 | INFO     | Closing database connection.
+2026-08-03 13:46:09 | INFO     | Page loaded: dashboard
+2026-08-03 13:46:09 | INFO     | Application Started.
+2026-08-03 13:46:13 | INFO     | Page loaded: projects
+2026-08-03 13:46:13 | INFO     | Navigate -> projects
+2026-08-03 13:46:47 | INFO     | Application closed.
+2026-08-03 13:46:47 | INFO     | Closing database connection.
+2026-08-03 13:52:33 | INFO     | Page loaded: dashboard
+2026-08-03 13:52:33 | INFO     | Application Started.
+2026-08-03 13:52:36 | INFO     | Page loaded: projects
+2026-08-03 13:52:36 | INFO     | Navigate -> projects
+2026-08-03 13:53:10 | INFO     | Application closed.
+2026-08-03 13:53:11 | INFO     | Closing database connection.
+2026-08-03 13:54:49 | INFO     | Page loaded: dashboard
+2026-08-03 13:54:49 | INFO     | Application Started.
+2026-08-03 13:54:53 | INFO     | Page loaded: projects
+2026-08-03 13:54:53 | INFO     | Navigate -> projects
+2026-08-03 13:55:22 | INFO     | Application closed.
+2026-08-03 13:55:23 | INFO     | Closing database connection.

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import customtkinter as ctk
 from tkinter import messagebox
-
+from models.project import Project
 
 class ProjectForm(ctk.CTkToplevel):
     def __init__(self, parent, project=None):
@@ -13,17 +13,22 @@ class ProjectForm(ctk.CTkToplevel):
         self.project = project
 
         self.title("Project")
-        self.geometry("700x600")
+        self.geometry("760x720")
         self.resizable(False, False)
         self.grab_set()
 
         self.vars = {
-            "project_code": ctk.StringVar(),
-            "project_name": ctk.StringVar(),
-            "client_name": ctk.StringVar(),
-            "location": ctk.StringVar(),
-            "description": ctk.StringVar(),
-        }
+           "project_code": ctk.StringVar(),
+           "project_name": ctk.StringVar(),
+           "client_name": ctk.StringVar(),
+           "consultant": ctk.StringVar(),
+           "contractor": ctk.StringVar(),
+           "location": ctk.StringVar(),
+           "start_date": ctk.StringVar(),
+           "end_date": ctk.StringVar(),
+           "status": ctk.StringVar(value="Planning"),
+           "remarks": ctk.StringVar(),
+   }
 
         self._build_form()
 
@@ -35,12 +40,17 @@ class ProjectForm(ctk.CTkToplevel):
 
     def _build_form(self):
         fields = [
-            ("Project Code", "project_code"),
-            ("Project Name", "project_name"),
-            ("Client Name", "client_name"),
-            ("Location", "location"),
-            ("Description", "description"),
-        ]
+           ("Project Code", "project_code"),
+           ("Project Name", "project_name"),
+           ("Client Name", "client_name"),
+           ("Consultant", "consultant"),
+           ("Contractor", "contractor"),
+           ("Location", "location"),
+           ("Start Date", "start_date"),
+           ("End Date", "end_date"),
+           ("Status", "status"),
+           ("Remarks", "remarks"),
+   ]
 
         for r, (label, key) in enumerate(fields):
             ctk.CTkLabel(self, text=label).grid(row=r, column=0, padx=15, pady=10, sticky="w")
@@ -69,7 +79,7 @@ class ProjectForm(ctk.CTkToplevel):
         if self.project is not None and hasattr(self.project, "id"):
             data["id"] = self.project.id
 
-        self.result = type("ProjectData", (), data)()
+        self.result = Project(**data)
         self.destroy()
 
     def cancel(self):

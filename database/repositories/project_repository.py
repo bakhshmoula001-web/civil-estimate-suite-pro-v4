@@ -31,10 +31,14 @@ class ProjectRepository:
             project_code,
             project_name,
             client_name,
+            consultant,
+            contractor,
             location,
-            description
-        )
-        VALUES (?, ?, ?, ?, ?)
+            start_date,
+            end_date,
+            status,
+            remarks)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         cursor = self.db.execute(
@@ -43,8 +47,13 @@ class ProjectRepository:
                 project.project_code,
                 project.project_name,
                 project.client_name,
+                project.consultant,
+                project.contractor,
                 project.location,
-                project.description,
+                project.start_date,
+                project.end_date,
+                project.status,
+                project.remarks,
             ),
         )
 
@@ -96,22 +105,33 @@ class ProjectRepository:
             project_code=?,
             project_name=?,
             client_name=?,
+            consultant=?,
+            contractor=?,
             location=?,
-            description=?,
+            start_date=?,
+            end_date=?,
+            status=?,
+            remarks=?,
             updated_at=CURRENT_TIMESTAMP
 
-        WHERE id=?
+         WHERE id=?
         """
-
+        print(sql)
         self.db.execute(
             sql,
             (
                 project.project_code,
                 project.project_name,
                 project.client_name,
+                project.consultant,
+                project.contractor,
                 project.location,
-                project.description,
+                project.start_date,
+                project.end_date,
+                project.status,
+                project.remarks,
                 project_id,
+            
             ),
         )
 
@@ -155,8 +175,16 @@ class ProjectRepository:
             OR project_name LIKE ?
 
             OR client_name LIKE ?
-
+            OR consultant LIKE ?
+            OR contractor LIKE ?
             OR location LIKE ?
+            OR start_date LIKE ?
+            OR end_date LIKE ?
+            OR status LIKE ?
+            OR remarks LIKE ?
+            OR created_at LIKE ?
+            OR updated_at LIKE ?
+
 
         ORDER BY id DESC
         """
@@ -164,6 +192,14 @@ class ProjectRepository:
         rows = self.db.fetchall(
             sql,
             (
+                keyword,
+                keyword,
+                keyword,
+                keyword,
+                keyword,
+                keyword,
+                keyword,
+                keyword,
                 keyword,
                 keyword,
                 keyword,

@@ -19,7 +19,13 @@ class ProjectTable(ctk.CTkFrame):
             "code",
             "name",
             "client",
+            "consultant",
+            "contractor",
             "location",
+            "start_date",
+            "end_date",
+            "status",
+            "remarks",
         )
 
         self.tree = ttk.Treeview(
@@ -33,7 +39,13 @@ class ProjectTable(ctk.CTkFrame):
             "code": "Project Code",
             "name": "Project Name",
             "client": "Client",
+            "consultant": "Consultant",
+            "contractor": "Contractor",
             "location": "Location",
+            "start_date": "Start Date",
+            "end_date": "End Date",
+            "status": "Status",
+            "remarks": "Remarks",
         }
 
         for col in columns:
@@ -69,7 +81,13 @@ class ProjectTable(ctk.CTkFrame):
                     getattr(project, "project_code", ""),
                     getattr(project, "project_name", ""),
                     getattr(project, "client_name", ""),
+                    getattr(project, "consultant", ""),
+                    getattr(project, "contractor", ""),
                     getattr(project, "location", ""),
+                    getattr(project, "start_date", ""),
+                    getattr(project, "end_date", ""),
+                    getattr(project, "status", ""),
+                    getattr(project, "remarks", ""),
                 ),
             )
 

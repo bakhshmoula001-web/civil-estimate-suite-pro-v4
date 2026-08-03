@@ -1,14 +1,3 @@
-"""
-=========================================================
-Civil Estimate Suite Pro v4.0
----------------------------------------------------------
-Module    : Sidebar
-Purpose   : Application Navigation Sidebar
-Author    : OpenAI + Moula Bakhsh
-Version   : 4.0.0
-=========================================================
-"""
-
 from __future__ import annotations
 
 import customtkinter as ctk
@@ -16,7 +5,7 @@ import customtkinter as ctk
 
 class Sidebar(ctk.CTkFrame):
     """
-    Left navigation sidebar.
+    Application Left Navigation Sidebar
     """
 
     WIDTH = 220
@@ -35,27 +24,23 @@ class Sidebar(ctk.CTkFrame):
         self,
         master,
         on_navigate=None,
-        **kwargs
+        **kwargs,
     ):
-
         super().__init__(
             master,
             width=self.WIDTH,
             corner_radius=0,
-            **kwargs
+            **kwargs,
         )
 
         self.on_navigate = on_navigate
-
-        self.buttons = {}
+        self.buttons: dict[str, ctk.CTkButton] = {}
 
         self.grid_propagate(False)
-
         self.grid_columnconfigure(0, weight=1)
 
         self._create_widgets()
-
-    # --------------------------------------------------
+            # --------------------------------------------------
     # Widgets
     # --------------------------------------------------
 
@@ -69,8 +54,11 @@ class Sidebar(ctk.CTkFrame):
                 self,
                 text=text,
                 height=40,
+                corner_radius=8,
                 anchor="w",
-                command=lambda p=page: self.navigate(p)
+                fg_color="transparent",
+                hover_color=("gray80", "gray25"),
+                command=lambda p=page: self.navigate(p),
             )
 
             button.grid(
@@ -78,7 +66,7 @@ class Sidebar(ctk.CTkFrame):
                 column=0,
                 padx=10,
                 pady=5,
-                sticky="ew"
+                sticky="ew",
             )
 
             self.buttons[page] = button
@@ -91,9 +79,10 @@ class Sidebar(ctk.CTkFrame):
             self,
             text="Exit",
             height=40,
+            corner_radius=8,
             fg_color="#B22222",
             hover_color="#8B0000",
-            command=self.master.on_close
+            command=self.master.on_close,
         )
 
         self.exit_button.grid(
@@ -101,41 +90,49 @@ class Sidebar(ctk.CTkFrame):
             column=0,
             padx=10,
             pady=20,
-            sticky="ew"
+            sticky="ew",
         )
-
-    # --------------------------------------------------
+            # --------------------------------------------------
     # Navigation
     # --------------------------------------------------
 
-def navigate(
-          self,
-          page_name: str
-):
+    def navigate(
+        self,
+        page_name: str,
+    ) -> None:
+        """
+        Trigger page navigation callback.
+        """
 
-          if callable(self.on_navigate):
+        if callable(self.on_navigate):
+            self.on_navigate(page_name)
 
-           self.on_navigate(page_name)
+        self.select(page_name)
 
     # --------------------------------------------------
     # Selection
     # --------------------------------------------------
 
-def select(
+    def select(
         self,
-        page_name: str
-    ):
+        page_name: str,
+    ) -> None:
+        """
+        Highlight active navigation button.
+        """
 
         for key, button in self.buttons.items():
 
             if key == page_name:
 
                 button.configure(
-                    fg_color=("gray70", "gray30")
+                    fg_color=("gray70", "gray30"),
+                    text_color=("black", "white"),
                 )
 
             else:
 
                 button.configure(
-                    fg_color=("gray25", "gray20")
+                    fg_color="transparent",
+                    text_color=("black", "white"),
                 )
