@@ -6,14 +6,15 @@ from tkinter import messagebox
 
 from gui.widgets.project_table import ProjectTable
 from gui.forms.project_form import ProjectForm
-
+from core.current_project import CurrentProject
 
 class ProjectPage(ctk.CTkFrame):
 
-    def __init__(self, master, controller):
+    def __init__(self, master, controller,window_manager):
         super().__init__(master)
 
         self.controller = controller
+        self.window_manager = window_manager
         self.search_var = ctk.StringVar()
 
         self.grid_rowconfigure(1, weight=1)
@@ -32,7 +33,7 @@ class ProjectPage(ctk.CTkFrame):
         ctk.CTkButton(bar, text="Edit", command=self.edit_project).pack(side="left", padx=4)
         ctk.CTkButton(bar, text="Delete", command=self.delete_project).pack(side="left", padx=4)
         ctk.CTkButton(bar, text="Refresh", command=self.refresh).pack(side="left", padx=4)
-
+        ctk.CTkButton(bar, text="Open BOQ", command=self.open_boq).pack(side="left", padx=4)
         entry = ctk.CTkEntry(
             bar,
             width=250,
@@ -72,8 +73,7 @@ class ProjectPage(ctk.CTkFrame):
                 or keyword in (p.end_date or "").lower()
                 or keyword in (p.created_at or "").lower()
                 or keyword in (p.updated_at or "").lower()
-                or keyword in (p.description or "").lower()
-                or keyword in (p.id or "").lower()
+                or keyword in str(p.id)
             ]
 
         self.project_table.load_projects(projects)
@@ -114,7 +114,7 @@ class ProjectPage(ctk.CTkFrame):
         if project is None:
             messagebox.showwarning("Projects", "Please select a project.")
             return
-
+        CurrentProject.set(project)
         form = ProjectForm(self, project)
         self.wait_window(form)
 
@@ -139,3 +139,17 @@ class ProjectPage(ctk.CTkFrame):
 
         self.controller.delete(project.id)
         self.refresh()
+    def open_boq(self):
+
+         project = self.project_table.selected_project()
+
+         if project is None:
+          messagebox.showwarning(
+            "Projects",
+            "Please select a project."
+        )
+          return
+
+         CurrentProject.set(project)
+
+         self.window_manager.show_page("boq")

@@ -6,8 +6,8 @@ from tkinter import messagebox
 from gui.widgets.boq_toolbar import BOQToolbar
 from gui.widgets.boq_table import BOQTable
 from gui.forms.boq_form import BOQForm
-
-
+from core.current_project import CurrentProject
+from models import project
 class BOQPage(ctk.CTkFrame):
     """
     BOQ Management Page
@@ -49,7 +49,7 @@ class BOQPage(ctk.CTkFrame):
                 return
     
             items = self.controller.search(keyword)
-    
+            items = self.controller.get_by_project(CurrentProject.id())
             if self.project_id is not None:
     
                 items = [
@@ -62,33 +62,39 @@ class BOQPage(ctk.CTkFrame):
     
     def new_item(self):
 
-            form = BOQForm(self)
-            if self.project_id is not None:
-             form.project_id.set(self.project_id)
+        project = CurrentProject.get()
 
-            self.wait_window(form)
+        if project is None:
+            messagebox.showwarning(
+                "BOQ",
+                "Please select a project first."
+        )
+            return
 
-            if form.result is None:
-             return
+        form = BOQForm(self)
 
-            try:
+        self.wait_window(form)
 
-             self.controller.create(form.result)
+        if form.result is None:
+            return
 
-             self.refresh()
+        try:
+            self.controller.create(form.result)
 
-             messagebox.showinfo(
-            "BOQ",
-            "BOQ Item Saved Successfully."
+            self.refresh()
+
+            messagebox.showinfo(
+                "BOQ",
+                "BOQ Item Saved Successfully."
         )
 
-            except Exception as ex:
+        except Exception as ex:
 
-              messagebox.showerror(
-             "BOQ Error",
-             str(ex)
+            messagebox.showerror(
+            "BOQ Error",
+            str(ex)
         )
-
+        
     def _create_toolbar(self):
 
         self.toolbar = BOQToolbar(
@@ -134,41 +140,19 @@ class BOQPage(ctk.CTkFrame):
 
     def refresh(self):
 
-        if self.project_id is None:
+        project = CurrentProject.get()
 
-            items = self.controller.get_all()
+        if project is None:
+         self.table.load_items([])
+         return
 
-        else:
-
-            items = self.controller.get_by_project(
-                self.project_id
-            )
+        items = self.controller.get_by_project(project.id)
 
         self.table.load_items(items)
 
     # =========================================================
 
-    def search(self, keyword):
-
-        keyword = keyword.strip()
-
-        if keyword == "":
-
-            self.refresh()
-
-            return
-
-        items = self.controller.search(keyword)
-
-        if self.project_id is not None:
-
-            items = [
-                i
-                for i in items
-                if i.project_id == self.project_id
-            ]
-
-        self.table.load_items(items)
+  
 
    
     def edit_item(self, item=None):

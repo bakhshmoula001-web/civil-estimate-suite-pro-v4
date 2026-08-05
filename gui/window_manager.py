@@ -49,6 +49,7 @@ class WindowManager:
         self.pages["projects"] = ProjectPage(
         self.parent,
         self.context.project_controller,
+        self,
 )
         self.pages["boq"] = BOQPage(
         self.parent,

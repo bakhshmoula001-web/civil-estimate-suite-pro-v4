@@ -43,21 +43,26 @@ class BaseForm(ctk.CTkToplevel):
         self.parent = parent
 
         self.form_title = title
-
         self.form_width = width
         self.form_height = height
 
-        self._is_dirty = False
         self.result = None
+        self._is_dirty = False
 
         self._configure_window()
-
         self._center_window()
-
         self._make_modal()
 
         self._create_header()
+        self._create_content()
+        self._create_footer()
+
         self._bind_events()
+
+        self.protocol(
+         "WM_DELETE_WINDOW",
+          self.cancel,
+)
 
     # ---------------------------------------------------------
     # Window Configuration
@@ -138,14 +143,7 @@ class BaseForm(ctk.CTkToplevel):
             pady=15,
             anchor="w"
         )
-        self._create_content()
-
-        self._create_footer()
-
-        self.protocol(
-            "WM_DELETE_WINDOW",
-            self.cancel
-        )
+       
             # ---------------------------------------------------------
     # Content Area
     # ---------------------------------------------------------
@@ -193,6 +191,7 @@ class BaseForm(ctk.CTkToplevel):
         self._create_status_label()
 
         self._create_buttons()
+        
             # ---------------------------------------------------------
     # Status Label
     # ---------------------------------------------------------
@@ -222,41 +221,39 @@ class BaseForm(ctk.CTkToplevel):
             self.footer_frame,
             text="Cancel",
             width=110,
-            command=self.cancel
-        )
+            command=self.cancel,
+    )
 
         self.cancel_button.grid(
             row=0,
             column=1,
             padx=(10, 5),
-            pady=10
-        )
+            pady=10,
+    )
 
         self.save_button = ctk.CTkButton(
             self.footer_frame,
             text="Save",
             width=110,
-            command=self.save
-        )
+            command=self.save,
+    )
 
         self.save_button.grid(
             row=0,
-            column=2,
+        column=2,
             padx=(5, 20),
-            pady=10
+            pady=10,
         )
             # ---------------------------------------------------------
             # Default Actions
             # ---------------------------------------------------------
 
-        def save(self):
+    def save(self):
 
-          if not self.validate():
-            return
+        if not self.validate():
+         return
 
-        data = self.collect_data()
-
-        self.result = data
+        self.result = self.collect_data()
 
         self.clear_dirty()
 
@@ -323,8 +320,11 @@ class BaseForm(ctk.CTkToplevel):
     # ---------------------------------------------------------
 
     def validate(self):
-
+        """
+        Child forms should override this method.
+        """
         return True
+
     # ---------------------------------------------------------
     # Helpers
     # ---------------------------------------------------------
@@ -337,24 +337,38 @@ class BaseForm(ctk.CTkToplevel):
     # ---------------------------------------------------------
 
     def load_data(self, data=None):
-        """
-        Child class should populate controls
-        from the supplied object.
-        """
-        pass
+       """
+       Child class should populate controls
+       from the supplied object.
+       """
+       raise NotImplementedError(
+        "Child form must implement load_data()."
+    )
+
 
     def collect_data(self):
-        """
-        Child class should return
-        model object or dictionary.
-        """
-        return None
+       """
+       Child class should return
+       model object or dictionary.
+       """
+       raise NotImplementedError(
+        "Child form must implement collect_data()."
+    )
 
     def reset(self):
         """
         Child class should clear controls.
+       """
+        raise NotImplementedError(
+        "Child form must implement reset()."
+    )
+    def _build_form(self):
+        """
+        Child forms should override this method to build their specific UI.
+        This method is called after the header, content, and footer frames are created.
         """
         pass
+   
         # ---------------------------------------------------------
     # Messages
     # ---------------------------------------------------------
@@ -418,3 +432,5 @@ class BaseForm(ctk.CTkToplevel):
         self.grab_release()
 
         self.destroy()
+    def _build_form(self):
+         pass 

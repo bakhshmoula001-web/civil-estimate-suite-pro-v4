@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from models import boq
 from models.boq import BOQ
 
 
@@ -18,6 +19,11 @@ class BOQRepository:
     # =====================================================
 
     def create(self, boq: BOQ):
+        print("========== BOQ DEBUG ==========")
+        print("project_id :", boq.project_id)
+        print("item_no    :", boq.item_no)
+        print("description:", boq.description)
+        print("===============================")
 
         cursor = self.db.execute(
             """
