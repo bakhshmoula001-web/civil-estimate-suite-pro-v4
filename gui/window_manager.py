@@ -14,8 +14,8 @@ from app.application_context import ApplicationContext
 from gui.pages.dashboard_page import DashboardPage
 from gui.pages.project_page import ProjectPage
 from gui.pages.boq_page import BOQPage
-
-
+from gui.pages.material_page import MaterialPage
+print("WindowManager Loaded - NEW VERSION")
 class WindowManager:
     """
     Controls navigation between application pages.
@@ -54,7 +54,13 @@ class WindowManager:
         self.pages["boq"] = BOQPage(
         self.parent,
         self.context.boq_controller,
+        
+)    
+        self.pages["materials"] = MaterialPage(
+            self.parent,
+            self.context.material_controller,
 )
+        print(self.pages.keys())
     # --------------------------------------------------
     # Show Page
     # --------------------------------------------------

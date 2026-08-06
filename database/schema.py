@@ -80,10 +80,38 @@ CREATE TABLE IF NOT EXISTS settings (
     setting_key TEXT UNIQUE NOT NULL,
     setting_value TEXT
 );
+CREATE TABLE IF NOT EXISTS materials (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    project_id INTEGER NOT NULL,
+
+    material_name TEXT NOT NULL,
+
+    unit TEXT NOT NULL,
+
+    quantity REAL DEFAULT 0,
+
+    rate REAL DEFAULT 0,
+
+    amount REAL DEFAULT 0,
+
+    remarks TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP,
+
+    FOREIGN KEY(project_id)
+        REFERENCES projects(id)
+        ON DELETE CASCADE
+);
 
 CREATE INDEX IF NOT EXISTS idx_projects_code ON projects(project_code);
 CREATE INDEX IF NOT EXISTS idx_boq_project ON boq_items(project_id);
 CREATE INDEX IF NOT EXISTS idx_material_project ON material_reports(project_id);
 CREATE INDEX IF NOT EXISTS idx_cost_project ON cost_reports(project_id);
 CREATE INDEX IF NOT EXISTS idx_structural_project ON structural_reports(project_id);
+CREATE INDEX IF NOT EXISTS idx_materials_project
+ON materials(project_id);
 """

@@ -47,8 +47,7 @@ class BOQForm(BaseForm):
          "amount": ctk.StringVar(value="0.00"),
          "remarks": ctk.StringVar(),
 }
-         print(type(self.vars))
-         print(self.vars)
+         
          self._build_form()
 
          self.vars["quantity"].trace_add(

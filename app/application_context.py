@@ -13,7 +13,11 @@ from controllers.project_controller import ProjectController
 from controllers.boq_controller import BOQController
 
 from core.logger import AppLogger
+from database.repositories.material_repository import MaterialRepository
 
+from services.material_service import MaterialService
+
+from controllers.material_controller import MaterialController
 
 class ApplicationContext:
     """
@@ -65,6 +69,7 @@ class ApplicationContext:
         self.project_controller = ProjectController(
             self.project_service
         )
+        
 
         # -------------------------------------------------
         # BOQ Module
@@ -81,7 +86,21 @@ class ApplicationContext:
         self.boq_controller = BOQController(
             self.boq_service
         )
+    # -------------------------------------------------
+# Material Module
+# -------------------------------------------------
 
+        self.material_repository = MaterialRepository(
+            self.database
+)
+
+        self.material_service = MaterialService(
+            self.material_repository
+)
+
+        self.material_controller = MaterialController(
+            self.material_service
+        )
     # -------------------------------------------------
 
     def shutdown(self):

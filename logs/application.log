@@ -442,3 +442,161 @@
 2026-08-05 18:03:05 | INFO     | Navigate -> projects
 2026-08-05 18:04:32 | INFO     | Application closed.
 2026-08-05 18:04:32 | INFO     | Closing database connection.
+2026-08-06 17:18:13 | INFO     | Page loaded: dashboard
+2026-08-06 17:18:13 | INFO     | Application Started.
+2026-08-06 17:18:18 | INFO     | Page loaded: dashboard
+2026-08-06 17:18:18 | INFO     | Navigate -> dashboard
+2026-08-06 17:18:19 | INFO     | Page loaded: projects
+2026-08-06 17:18:19 | INFO     | Navigate -> projects
+2026-08-06 17:18:21 | INFO     | Page loaded: boq
+2026-08-06 17:18:21 | INFO     | Navigate -> boq
+2026-08-06 17:18:24 | INFO     | Page loaded: projects
+2026-08-06 17:18:24 | INFO     | Navigate -> projects
+2026-08-06 17:18:27 | INFO     | Page loaded: boq
+2026-08-06 17:18:27 | INFO     | Navigate -> boq
+2026-08-06 17:18:29 | INFO     | Page loaded: projects
+2026-08-06 17:18:29 | INFO     | Navigate -> projects
+2026-08-06 17:18:32 | INFO     | Page loaded: boq
+2026-08-06 17:18:36 | INFO     | Page loaded: boq
+2026-08-06 17:18:36 | INFO     | Navigate -> boq
+2026-08-06 17:19:21 | WARNING  | Page not registered: materials
+2026-08-06 17:19:21 | INFO     | Navigate -> materials
+2026-08-06 17:19:23 | WARNING  | Page not registered: materials
+2026-08-06 17:19:23 | INFO     | Navigate -> materials
+2026-08-06 17:19:25 | INFO     | Page loaded: boq
+2026-08-06 17:19:25 | INFO     | Navigate -> boq
+2026-08-06 17:19:27 | WARNING  | Page not registered: materials
+2026-08-06 17:19:27 | INFO     | Navigate -> materials
+2026-08-06 17:19:29 | INFO     | Page loaded: boq
+2026-08-06 17:19:29 | INFO     | Navigate -> boq
+2026-08-06 17:19:30 | WARNING  | Page not registered: materials
+2026-08-06 17:19:30 | INFO     | Navigate -> materials
+2026-08-06 17:19:31 | WARNING  | Page not registered: calculators
+2026-08-06 17:19:31 | INFO     | Navigate -> calculators
+2026-08-06 17:19:32 | WARNING  | Page not registered: reports
+2026-08-06 17:19:32 | INFO     | Navigate -> reports
+2026-08-06 17:19:33 | WARNING  | Page not registered: settings
+2026-08-06 17:19:33 | INFO     | Navigate -> settings
+2026-08-06 17:19:34 | WARNING  | Page not registered: materials
+2026-08-06 17:19:34 | INFO     | Navigate -> materials
+2026-08-06 17:20:10 | INFO     | Application closed.
+2026-08-06 17:20:10 | INFO     | Closing database connection.
+2026-08-06 17:22:10 | INFO     | Page loaded: dashboard
+2026-08-06 17:22:10 | INFO     | Application Started.
+2026-08-06 17:22:14 | INFO     | Page loaded: projects
+2026-08-06 17:22:14 | INFO     | Navigate -> projects
+2026-08-06 17:22:14 | INFO     | Page loaded: boq
+2026-08-06 17:22:14 | INFO     | Navigate -> boq
+2026-08-06 17:22:16 | WARNING  | Page not registered: materials
+2026-08-06 17:22:16 | INFO     | Navigate -> materials
+2026-08-06 17:22:18 | WARNING  | Page not registered: materials
+2026-08-06 17:22:18 | INFO     | Navigate -> materials
+2026-08-06 17:22:19 | WARNING  | Page not registered: materials
+2026-08-06 17:22:19 | INFO     | Navigate -> materials
+2026-08-06 17:22:20 | INFO     | Application closed.
+2026-08-06 17:22:20 | INFO     | Closing database connection.
+2026-08-06 17:30:27 | INFO     | Page loaded: dashboard
+2026-08-06 17:30:27 | INFO     | Application Started.
+2026-08-06 17:30:31 | INFO     | Page loaded: boq
+2026-08-06 17:30:31 | INFO     | Navigate -> boq
+2026-08-06 17:30:33 | INFO     | Page loaded: materials
+2026-08-06 17:30:33 | INFO     | Navigate -> materials
+2026-08-06 17:30:39 | INFO     | Page loaded: boq
+2026-08-06 17:30:39 | INFO     | Navigate -> boq
+2026-08-06 17:30:40 | INFO     | Page loaded: projects
+2026-08-06 17:30:40 | INFO     | Navigate -> projects
+2026-08-06 17:30:48 | INFO     | Page loaded: materials
+2026-08-06 17:30:48 | INFO     | Navigate -> materials
+2026-08-06 17:30:59 | INFO     | Page loaded: boq
+2026-08-06 17:30:59 | INFO     | Navigate -> boq
+2026-08-06 17:31:00 | INFO     | Page loaded: projects
+2026-08-06 17:31:00 | INFO     | Navigate -> projects
+2026-08-06 17:31:02 | INFO     | Page loaded: boq
+2026-08-06 17:31:04 | INFO     | Page loaded: boq
+2026-08-06 17:31:04 | INFO     | Navigate -> boq
+2026-08-06 17:31:06 | INFO     | Page loaded: boq
+2026-08-06 17:31:06 | INFO     | Navigate -> boq
+2026-08-06 17:31:07 | INFO     | Page loaded: boq
+2026-08-06 17:31:07 | INFO     | Navigate -> boq
+2026-08-06 17:31:07 | INFO     | Page loaded: boq
+2026-08-06 17:31:07 | INFO     | Navigate -> boq
+2026-08-06 17:31:08 | INFO     | Page loaded: projects
+2026-08-06 17:31:08 | INFO     | Navigate -> projects
+2026-08-06 17:31:16 | INFO     | Page loaded: materials
+2026-08-06 17:31:16 | INFO     | Navigate -> materials
+2026-08-06 17:32:39 | INFO     | Application closed.
+2026-08-06 17:32:40 | INFO     | Closing database connection.
+2026-08-06 17:53:16 | INFO     | Page loaded: dashboard
+2026-08-06 17:53:16 | INFO     | Application Started.
+2026-08-06 17:53:21 | INFO     | Page loaded: materials
+2026-08-06 17:53:21 | INFO     | Navigate -> materials
+2026-08-06 17:53:25 | INFO     | Page loaded: boq
+2026-08-06 17:53:25 | INFO     | Navigate -> boq
+2026-08-06 17:53:26 | INFO     | Page loaded: projects
+2026-08-06 17:53:26 | INFO     | Navigate -> projects
+2026-08-06 17:53:29 | INFO     | Page loaded: materials
+2026-08-06 17:53:29 | INFO     | Navigate -> materials
+2026-08-06 17:53:34 | INFO     | Page loaded: boq
+2026-08-06 17:53:34 | INFO     | Navigate -> boq
+2026-08-06 17:53:35 | INFO     | Page loaded: projects
+2026-08-06 17:53:35 | INFO     | Navigate -> projects
+2026-08-06 17:53:37 | INFO     | Page loaded: boq
+2026-08-06 17:53:41 | INFO     | Page loaded: boq
+2026-08-06 17:53:41 | INFO     | Navigate -> boq
+2026-08-06 17:53:42 | INFO     | Page loaded: projects
+2026-08-06 17:53:42 | INFO     | Navigate -> projects
+2026-08-06 17:53:48 | INFO     | Page loaded: boq
+2026-08-06 17:53:51 | INFO     | Page loaded: boq
+2026-08-06 17:53:51 | INFO     | Navigate -> boq
+2026-08-06 17:53:52 | INFO     | Page loaded: projects
+2026-08-06 17:53:52 | INFO     | Navigate -> projects
+2026-08-06 17:54:00 | INFO     | Page loaded: materials
+2026-08-06 17:54:00 | INFO     | Navigate -> materials
+2026-08-06 17:54:01 | INFO     | Page loaded: materials
+2026-08-06 17:54:01 | INFO     | Navigate -> materials
+2026-08-06 17:54:01 | INFO     | Page loaded: materials
+2026-08-06 17:54:01 | INFO     | Navigate -> materials
+2026-08-06 17:54:01 | INFO     | Page loaded: materials
+2026-08-06 17:54:01 | INFO     | Navigate -> materials
+2026-08-06 17:54:02 | INFO     | Page loaded: materials
+2026-08-06 17:54:02 | INFO     | Navigate -> materials
+2026-08-06 17:54:02 | INFO     | Page loaded: materials
+2026-08-06 17:54:02 | INFO     | Navigate -> materials
+2026-08-06 17:54:02 | INFO     | Page loaded: materials
+2026-08-06 17:54:02 | INFO     | Navigate -> materials
+2026-08-06 17:54:03 | INFO     | Page loaded: materials
+2026-08-06 17:54:03 | INFO     | Navigate -> materials
+2026-08-06 17:54:45 | INFO     | Page loaded: boq
+2026-08-06 17:54:45 | INFO     | Navigate -> boq
+2026-08-06 17:54:46 | INFO     | Page loaded: materials
+2026-08-06 17:54:46 | INFO     | Navigate -> materials
+2026-08-06 17:54:47 | INFO     | Page loaded: boq
+2026-08-06 17:54:47 | INFO     | Navigate -> boq
+2026-08-06 17:54:50 | INFO     | Page loaded: materials
+2026-08-06 17:54:50 | INFO     | Navigate -> materials
+2026-08-06 17:54:52 | INFO     | Page loaded: projects
+2026-08-06 17:54:52 | INFO     | Navigate -> projects
+2026-08-06 17:54:53 | INFO     | Page loaded: boq
+2026-08-06 17:54:53 | INFO     | Navigate -> boq
+2026-08-06 17:55:03 | INFO     | Page loaded: materials
+2026-08-06 17:55:03 | INFO     | Navigate -> materials
+2026-08-06 17:55:21 | INFO     | Application closed.
+2026-08-06 17:55:21 | INFO     | Closing database connection.
+2026-08-06 17:56:45 | INFO     | Page loaded: dashboard
+2026-08-06 17:56:45 | INFO     | Application Started.
+2026-08-06 17:56:49 | INFO     | Page loaded: materials
+2026-08-06 17:56:49 | INFO     | Navigate -> materials
+2026-08-06 17:56:50 | INFO     | Page loaded: materials
+2026-08-06 17:56:50 | INFO     | Navigate -> materials
+2026-08-06 17:56:51 | INFO     | Page loaded: boq
+2026-08-06 17:56:52 | INFO     | Navigate -> boq
+2026-08-06 17:56:52 | INFO     | Page loaded: projects
+2026-08-06 17:56:52 | INFO     | Navigate -> projects
+2026-08-06 17:56:56 | INFO     | Page loaded: materials
+2026-08-06 17:56:56 | INFO     | Navigate -> materials
+2026-08-06 17:57:01 | INFO     | Page loaded: projects
+2026-08-06 17:57:01 | INFO     | Navigate -> projects
+2026-08-06 17:57:10 | INFO     | Page loaded: materials
+2026-08-06 17:57:10 | INFO     | Navigate -> materials
+2026-08-06 17:58:52 | INFO     | Application closed.
+2026-08-06 17:58:53 | INFO     | Closing database connection.
