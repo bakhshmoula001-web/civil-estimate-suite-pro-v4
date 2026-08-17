@@ -75,10 +75,48 @@ CREATE TABLE IF NOT EXISTS structural_reports (
     FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS estimate_analyses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    project_id INTEGER NOT NULL,
+    boq_id INTEGER NOT NULL UNIQUE,
+    calculator_type TEXT NOT NULL,
+    analysis_json TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    FOREIGN KEY(boq_id) REFERENCES boq(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS settings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     setting_key TEXT UNIQUE NOT NULL,
     setting_value TEXT
+);
+CREATE TABLE IF NOT EXISTS materials (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    project_id INTEGER NOT NULL,
+
+    material_name TEXT NOT NULL,
+
+    unit TEXT NOT NULL,
+
+    quantity REAL DEFAULT 0,
+
+    rate REAL DEFAULT 0,
+
+    amount REAL DEFAULT 0,
+
+    remarks TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP,
+
+    FOREIGN KEY(project_id)
+        REFERENCES projects(id)
+        ON DELETE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_projects_code ON projects(project_code);
@@ -86,4 +124,25 @@ CREATE INDEX IF NOT EXISTS idx_boq_project ON boq_items(project_id);
 CREATE INDEX IF NOT EXISTS idx_material_project ON material_reports(project_id);
 CREATE INDEX IF NOT EXISTS idx_cost_project ON cost_reports(project_id);
 CREATE INDEX IF NOT EXISTS idx_structural_project ON structural_reports(project_id);
+CREATE INDEX IF NOT EXISTS idx_materials_project
+ON materials(project_id);
+
+
+CREATE TABLE IF NOT EXISTS rate_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    project_id INTEGER NOT NULL,
+    category TEXT NOT NULL,
+    item_name TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    rate REAL DEFAULT 0,
+    source TEXT DEFAULT 'Project',
+    remarks TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    UNIQUE(project_id, category, item_name, unit)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rate_items_project
+ON rate_items(project_id);
 """

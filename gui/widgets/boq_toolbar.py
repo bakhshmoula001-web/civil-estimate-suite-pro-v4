@@ -18,6 +18,7 @@ class BOQToolbar(ctk.CTkFrame):
         on_refresh: Optional[Callable] = None,
         on_export: Optional[Callable] = None,
         on_print: Optional[Callable] = None,
+        on_material_report: Optional[Callable] = None,
         on_search: Optional[Callable[[str], None]] = None,
         **kwargs,
     ):
@@ -25,7 +26,7 @@ class BOQToolbar(ctk.CTkFrame):
 
         self.grid_columnconfigure(6, weight=1)
 
-        self.search_var = ctk.StringVar()
+        self.search_var = ctk.StringVar(master=self)
 
         buttons = [
             ("➕ New", on_new),
@@ -33,6 +34,7 @@ class BOQToolbar(ctk.CTkFrame):
             ("🗑 Delete", on_delete),
             ("🔄 Refresh", on_refresh),
             ("📤 Export", on_export),
+            ("🧱 Material Report", on_material_report),
             ("🖨 Print", on_print),
         ]
 
@@ -53,6 +55,8 @@ class BOQToolbar(ctk.CTkFrame):
                 pady=8,
             )
 
+        self.grid_columnconfigure(7, weight=1)
+
         self.search_entry = ctk.CTkEntry(
             self,
             width=300,
@@ -62,7 +66,7 @@ class BOQToolbar(ctk.CTkFrame):
 
         self.search_entry.grid(
             row=0,
-            column=7,
+            column=8,
             padx=(15, 10),
             pady=8,
             sticky="e",

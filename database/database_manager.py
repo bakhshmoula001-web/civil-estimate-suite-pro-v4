@@ -3,13 +3,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-conn = sqlite3.connect("database/civil_estimate_suite.db")
 
-cur = conn.cursor()
-
-cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
-
-print(cur.fetchall())
 class DatabaseManager:
     """SQLite Database Manager"""
 
@@ -81,8 +75,14 @@ class DatabaseManager:
                 project_code,
                 project_name,
                 client_name,
+                consultant,
+                contractor
                 location,
-                description
+                start_date,
+                end_date,
+                status,
+                remarks
+
             )
             VALUES (?, ?, ?, ?, ?)
             """,
@@ -90,8 +90,13 @@ class DatabaseManager:
                 project.project_code,
                 project.project_name,
                 project.client_name,
+                project.consultant,
+                project.contractor,
                 project.location,
-                project.description,
+                project.start_date,
+                project.end_date,
+                project.status,
+                project.remarks,
             ),
         )
 
