@@ -14,3 +14,12 @@ htmlcov/
 .env
 .DS_Store
 Thumbs.db
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+logs/
+*.log
+exports/*
+!exports/__init__.py
+installer/
+*.exe

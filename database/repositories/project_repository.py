@@ -24,7 +24,6 @@ class ProjectRepository:
     # =====================================================
 
     def create(self, project: Project):
-
         sql = """
         INSERT INTO projects
         (
@@ -58,7 +57,6 @@ class ProjectRepository:
         )
 
         self.db.commit()
-
         return cursor.lastrowid
 
     # =====================================================
@@ -66,7 +64,6 @@ class ProjectRepository:
     # =====================================================
 
     def get(self, project_id: int):
-
         sql = """
         SELECT *
         FROM projects
@@ -81,7 +78,6 @@ class ProjectRepository:
         return Project.from_row(row)
 
     def get_all(self):
-
         sql = """
         SELECT *
         FROM projects
@@ -89,7 +85,6 @@ class ProjectRepository:
         """
 
         rows = self.db.fetchall(sql)
-
         return [Project.from_row(r) for r in rows]
 
     # =====================================================
@@ -97,11 +92,9 @@ class ProjectRepository:
     # =====================================================
 
     def update(self, project_id: int, project: Project):
-
         sql = """
         UPDATE projects
         SET
-
             project_code=?,
             project_name=?,
             client_name=?,
@@ -113,10 +106,9 @@ class ProjectRepository:
             status=?,
             remarks=?,
             updated_at=CURRENT_TIMESTAMP
-
-         WHERE id=?
+        WHERE id=?
         """
-        print(sql)
+
         self.db.execute(
             sql,
             (
@@ -131,12 +123,10 @@ class ProjectRepository:
                 project.status,
                 project.remarks,
                 project_id,
-            
             ),
         )
 
         self.db.commit()
-
         return True
 
     # =====================================================
@@ -144,16 +134,13 @@ class ProjectRepository:
     # =====================================================
 
     def delete(self, project_id: int):
-
         sql = """
         DELETE FROM projects
         WHERE id=?
         """
 
         self.db.execute(sql, (project_id,))
-
         self.db.commit()
-
         return True
 
     # =====================================================
@@ -161,19 +148,14 @@ class ProjectRepository:
     # =====================================================
 
     def search(self, keyword: str):
-
         keyword = f"%{keyword}%"
 
         sql = """
         SELECT *
         FROM projects
-
         WHERE
-
             project_code LIKE ?
-
             OR project_name LIKE ?
-
             OR client_name LIKE ?
             OR consultant LIKE ?
             OR contractor LIKE ?
@@ -184,8 +166,6 @@ class ProjectRepository:
             OR remarks LIKE ?
             OR created_at LIKE ?
             OR updated_at LIKE ?
-
-
         ORDER BY id DESC
         """
 
@@ -214,7 +194,6 @@ class ProjectRepository:
     # =====================================================
 
     def find_by_code(self, project_code: str):
-
         sql = """
         SELECT *
         FROM projects
@@ -229,33 +208,64 @@ class ProjectRepository:
         return Project.from_row(row)
 
     def get_recent(self, limit: int = 10):
+        limit = max(1, int(limit))
 
-        sql = f"""
+        sql = """
         SELECT *
         FROM projects
-
         ORDER BY id DESC
-
-        LIMIT {limit}
+        LIMIT ?
         """
 
-        rows = self.db.fetchall(sql)
-
+        rows = self.db.fetchall(sql, (limit,))
         return [Project.from_row(r) for r in rows]
 
     def count(self):
+        """
+        Return the actual number of project records.
+
+        The database wrapper may return a dictionary-like row,
+        sqlite Row, tuple/list, or a scalar depending on the
+        configured database adapter. Handle all supported forms.
+        """
 
         sql = """
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS project_count
         FROM projects
         """
 
         row = self.db.fetchone(sql)
 
+        if row is None:
+            return 0
+
         if isinstance(row, dict):
-            return list(row.values())[0]
+            value = row.get("project_count")
+
+            if value is None:
+                value = next(iter(row.values()), 0)
+
+            try:
+                return int(value or 0)
+            except (TypeError, ValueError):
+                return 0
+
+        try:
+            value = row["project_count"]
+            return int(value or 0)
+        except (KeyError, IndexError, TypeError):
+            pass
 
         if isinstance(row, (tuple, list)):
-            return row[0]
+            if not row:
+                return 0
 
-        return 0
+            try:
+                return int(row[0] or 0)
+            except (TypeError, ValueError):
+                return 0
+
+        try:
+            return int(row)
+        except (TypeError, ValueError):
+            return 0

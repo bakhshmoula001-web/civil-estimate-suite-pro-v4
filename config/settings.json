@@ -6,12 +6,47 @@
         "window_height": 850,
         "remember_window_size": true
     },
+    "estimation": {
+        "currency": "PKR",
+        "decimal_places": 2,
+        "length_unit": "m",
+        "area_unit": "m²",
+        "volume_unit": "m³",
+        "steel_unit": "kg",
+        "concrete_mix": "1:2:4",
+        "cement_rate": 1650.0,
+        "sand_rate": 800.0,
+        "aggregate_rate": 1000.0,
+        "steel_rate": 280.0,
+        "skilled_labour_rate": 2500.0,
+        "unskilled_labour_rate": 1250.0,
+        "default_concrete_mix": "1:2:4",
+        "pcc_skilled_productivity": 1.0,
+        "pcc_unskilled_productivity": 2.0,
+        "rcc_skilled_productivity": 1.0,
+        "rcc_unskilled_productivity": 2.0,
+        "brickwork_skilled_productivity": 10.0,
+        "brickwork_unskilled_productivity": 15.0,
+        "plaster_skilled_productivity": 10.0,
+        "plaster_unskilled_productivity": 15.0,
+        "excavation_skilled_productivity": 8.0,
+        "excavation_unskilled_productivity": 6.0,
+        "footing_skilled_productivity": 1.0,
+        "footing_unskilled_productivity": 2.0,
+        "staircase_skilled_productivity": 1.0,
+        "staircase_unskilled_productivity": 2.0
+    },
+    "reports": {
+        "default_export_format": "xlsx",
+        "include_material_breakdown": true,
+        "include_labour_breakdown": true,
+        "default_remarks": "",
+        "export_folder": "exports",
+        "include_remarks": true
+    },
     "database": {
         "auto_backup": true,
         "backup_interval_days": 7
-    },
-    "reports": {
-        "default_export_format": "xlsx"
     },
     "logging": {
         "level": "INFO"

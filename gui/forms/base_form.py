@@ -76,7 +76,11 @@ class BaseForm(ctk.CTkToplevel):
             f"{self.form_width}x{self.form_height}"
         )
 
-        self.resizable(False, False)
+        self.resizable(True, True)
+
+        # Keep the form usable on smaller screens while allowing
+        # normal Windows minimize/maximize/resize behaviour.
+        self.minsize(760, 620)
 
     # ---------------------------------------------------------
     # Center Window

@@ -1,398 +1,777 @@
+"""
+=========================================================
+Civil Estimate Suite Pro v4.0
+---------------------------------------------------------
+Module    : BOQ Form
+Purpose   : Create / Edit BOQ Item
+Version   : 4.0.0
+=========================================================
+"""
 
 from __future__ import annotations
 
 import customtkinter as ctk
 from tkinter import messagebox
 
-from models import boq
-from models.boq import BOQ
 from core.current_project import CurrentProject
-from gui.forms.boq_form_helpers import BOQFormHelpers
-from gui.forms.boq_form_validation import BOQFormValidation
-from gui.forms.base_form import BaseForm
-class BOQForm(BaseForm):
-    """
-    BOQ Entry Dialog
+from models.boq import BOQ
 
-    Features
-    --------
-    • Add BOQ Item
-    • Edit BOQ Item
-    • Auto Amount Calculation
-    • Current Project Integration
-    • Validation
+
+class BOQForm(ctk.CTkToplevel):
     """
+    Professional BOQ entry dialog.
+
+    The form is intentionally self-contained so it does not
+    depend on unstable helper/validation implementations.
+
+    Result
+    ------
+    self.result is None when cancelled.
+
+    self.result contains a validated BOQ object when saved.
+    """
+
+    WIDTH = 720
+    HEIGHT = 650
+
+    UNIT_OPTIONS = [
+        "Nos",
+        "inch",
+        "rft",
+        "sft",
+        "cft",
+        "sq-yard",
+        "cm",
+        "m",
+        "m²",
+        "m³",
+        "kg",
+        "Ton",
+        "L.S",
+    ]
+
+    def __init__(
+        self,
+        parent,
+        boq: BOQ | None = None,
+        project=None,
+    ):
+        super().__init__(parent)
+
+        self.parent = parent
+        self.boq = boq
+        self.result = None
+
+        # Accept an explicitly supplied project from BOQPage while
+        # retaining compatibility with older callers.
+        self.project = project if project is not None else self._get_current_project()
+
+        self.item_no_var = ctk.StringVar()
+        self.description_var = ctk.StringVar()
+        self.unit_var = ctk.StringVar(value="Nos")
+        self.quantity_var = ctk.StringVar(value="0")
+        self.rate_var = ctk.StringVar(value="0")
+        self.amount_var = ctk.StringVar(value="0.00")
+        self.remarks_var = ctk.StringVar()
+
+        self._configure_window()
+        self._build_ui()
+        self._bind_calculation_events()
+
+        if self.boq is not None:
+            self.load_data(self.boq)
+        else:
+            self._update_amount()
+
+        self._make_modal()
 
     # =====================================================
-    # Constructor
+    # WINDOW
     # =====================================================
 
-    def __init__(self, parent, boq: BOQ | None = None):
-         super().__init__(
-         parent,
-         title="BOQ Item",
-         width=720,
-         height=620,
-    )
+    def _configure_window(self) -> None:
+        title = (
+            "Edit BOQ Item"
+            if self.boq is not None
+            else "New BOQ Item"
+        )
 
-         self.boq = boq
-         self.project = CurrentProject.get()
+        self.title(title)
+        self.geometry(
+            f"{self.WIDTH}x{self.HEIGHT}"
+        )
+        self.resizable(False, False)
+        self.transient(self.parent)
 
-         self.vars = {
-         "item_no": ctk.StringVar(),
-         "description": ctk.StringVar(),
-         "unit": ctk.StringVar(value="Nos"),
-         "quantity": ctk.StringVar(value="0"),
-         "rate": ctk.StringVar(value="0"),
-         "amount": ctk.StringVar(value="0.00"),
-         "remarks": ctk.StringVar(),
-}
-         
-         self._build_form()
+        self.protocol(
+            "WM_DELETE_WINDOW",
+            self.cancel,
+        )
 
-         self.vars["quantity"].trace_add(
-             "write",
-            self.calculate_amount,
-)
+    def _make_modal(self) -> None:
+        self.grab_set()
+        self.focus_force()
 
-         self.vars["rate"].trace_add(
-             "write",
-             self.calculate_amount,
-)
+        try:
+            self.lift()
+        except Exception:
+            pass
 
-         if boq is not None:
-          self.load_data(boq)
+    # =====================================================
+    # PROJECT
+    # =====================================================
 
-    def _build_form(self):
-        
-    # ---------------------------------------------
-    # Main Container
-    # ---------------------------------------------
+    def _get_current_project(self):
+        try:
+            return CurrentProject.get()
+        except Exception:
+            return None
 
-        frame = self.content_frame
+    def _project_text(self) -> str:
+        if self.project is None:
+            return "No project selected"
 
-        self.content_frame.grid_columnconfigure(
-        1,
-         weight=1,
-    )
+        code = str(
+            getattr(
+                self.project,
+                "project_code",
+                "",
+            )
+        ).strip()
+
+        name = str(
+            getattr(
+                self.project,
+                "project_name",
+                "",
+            )
+        ).strip()
+
+        if code and name:
+            return f"{code} - {name}"
+
+        return code or name or "Current Project"
+
+    # =====================================================
+    # UI
+    # =====================================================
+
+    def _build_ui(self) -> None:
+        outer = ctk.CTkFrame(
+            self,
+            corner_radius=10,
+        )
+
+        outer.pack(
+            fill="both",
+            expand=True,
+            padx=18,
+            pady=18,
+        )
+
+        outer.grid_columnconfigure(
+            1,
+            weight=1,
+        )
 
         row = 0
 
-    # ---------------------------------------------
-    # Current Project
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Project
+        # -------------------------------------------------
 
-        ctk.CTkLabel(
-           frame,
-           text="Project",
-        ).grid(
-          row=row,
-          column=0,
-          padx=10,
-          pady=8,
-          sticky="w",
-    )
-
-        project_name = ""
-
-        if self.project:
-
-          project_name = (
-            f"{self.project.project_code}"
-            f" - "
-            f"{self.project.project_name}"
+        self._create_label(
+            outer,
+            "Project",
+            row,
         )
 
-        ctk.CTkLabel(
-           frame,
-           text=project_name,
+        self.project_label = ctk.CTkLabel(
+            outer,
+            text=self._project_text(),
             anchor="w",
-           ).grid(
-           row=row,
-           column=1,
-           padx=10,
-           pady=8,
-           sticky="ew",
-    )
+        )
+
+        self.project_label.grid(
+            row=row,
+            column=1,
+            padx=10,
+            pady=7,
+            sticky="ew",
+        )
 
         row += 1
 
-    # ---------------------------------------------
-    # Item No
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Item No
+        # -------------------------------------------------
 
-        self._entry(
-          frame,
-          "Item No",
-         self.vars["item_no"],
-          row,
-    )
-
-        row += 1
-
-    # ---------------------------------------------
-    # Description
-    # ---------------------------------------------
-
-        self._entry(
-           frame,
-           "Description",
-           self.vars["description"],
-           row,
-    )
+        self._create_entry(
+            outer,
+            "Item No",
+            self.item_no_var,
+            row,
+        )
 
         row += 1
 
-    # ---------------------------------------------
-    # Unit
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Description
+        # -------------------------------------------------
 
-        ctk.CTkLabel(
-           frame,
-           text="Unit",
-        ).grid(
-           row=row,
-           column=0,
-           padx=10,
-           pady=8,
-           sticky="w",
+        self._create_entry(
+            outer,
+            "Description",
+            self.description_var,
+            row,
+        )
+
+        row += 1
+
+        # -------------------------------------------------
+        # Unit
+        # -------------------------------------------------
+
+        self._create_label(
+            outer,
+            "Unit",
+            row,
         )
 
         self.unit_combo = ctk.CTkComboBox(
-            frame,
-            variable=self.vars["unit"],
+            outer,
+            variable=self.unit_var,
+            values=self.UNIT_OPTIONS,
             width=350,
-            values=[
-            "Nos",
-            "inch",
-            "rft",
-            "sft",
-            "cft",
-            "sq-yard",
-            "cm",
-            "m",
-            "m²",
-            "m³",
-            "kg",
-            "Ton",
-            "L.S",
-        ],
-    )
+        )
 
         self.unit_combo.grid(
             row=row,
             column=1,
             padx=10,
-            pady=8,
+            pady=7,
             sticky="ew",
         )
 
         row += 1
 
-    # ---------------------------------------------
-    # Quantity
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Quantity
+        # -------------------------------------------------
 
-        self._entry(
-            frame,
+        self._create_entry(
+            outer,
             "Quantity",
-            self.vars["quantity"],
+            self.quantity_var,
             row,
         )
 
         row += 1
 
-    # ---------------------------------------------
-    # Rate
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Rate
+        # -------------------------------------------------
 
-        self._entry(
-            frame,
+        self._create_entry(
+            outer,
             "Rate",
-            self.vars["rate"],
+            self.rate_var,
             row,
         )
 
         row += 1
 
-    # ---------------------------------------------
-    # Amount
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Amount
+        # -------------------------------------------------
 
-        self._entry(
-            frame,
+        self._create_label(
+            outer,
             "Amount",
-            self.vars["amount"],
             row,
+        )
+
+        self.amount_entry = ctk.CTkEntry(
+            outer,
+            textvariable=self.amount_var,
+            width=350,
             state="readonly",
         )
 
+        self.amount_entry.grid(
+            row=row,
+            column=1,
+            padx=10,
+            pady=7,
+            sticky="ew",
+        )
+
         row += 1
 
-    # ---------------------------------------------
-    # Remarks
-    # ---------------------------------------------
+        # -------------------------------------------------
+        # Remarks
+        # -------------------------------------------------
 
-        self._entry(
-            frame,
+        self._create_entry(
+            outer,
             "Remarks",
-            self.vars["remarks"],
+            self.remarks_var,
             row,
         )
-       #--------------------------------
-# Common Entry Widget
-# ---------------------------------------------------------
 
-    def _entry(
-         self,
-         parent,
-         text,
-         variable,
-         row,
-         state="normal",
-    ):
+        row += 1
 
-         ctk.CTkLabel(
-              parent,
-             text=text,
+        # -------------------------------------------------
+        # Separator / info
+        # -------------------------------------------------
+
+        self.info_label = ctk.CTkLabel(
+            outer,
+            text="Amount = Quantity × Rate",
+            anchor="w",
+        )
+
+        self.info_label.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=(12, 5),
+            sticky="w",
+        )
+
+        row += 1
+
+        self.status_label = ctk.CTkLabel(
+            outer,
+            text="Ready",
+            anchor="w",
+        )
+
+        self.status_label.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=5,
+            sticky="w",
+        )
+
+        row += 1
+
+        # -------------------------------------------------
+        # Buttons
+        # -------------------------------------------------
+
+        button_frame = ctk.CTkFrame(
+            outer,
+            fg_color="transparent",
+        )
+
+        button_frame.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            padx=10,
+            pady=(12, 5),
+            sticky="e",
+        )
+
+        self.cancel_button = ctk.CTkButton(
+            button_frame,
+            text="Cancel",
+            width=110,
+            command=self.cancel,
+        )
+
+        self.cancel_button.pack(
+            side="left",
+            padx=5,
+        )
+
+        self.save_button = ctk.CTkButton(
+            button_frame,
+            text="Save",
+            width=120,
+            command=self.save,
+        )
+
+        self.save_button.pack(
+            side="left",
+            padx=5,
+        )
+
+    def _create_label(
+        self,
+        parent,
+        text: str,
+        row: int,
+    ) -> None:
+        ctk.CTkLabel(
+            parent,
+            text=text,
         ).grid(
             row=row,
             column=0,
             padx=10,
-            pady=8,
+            pady=7,
             sticky="w",
-    )
+        )
 
-         entry = ctk.CTkEntry(
+    def _create_entry(
+        self,
+        parent,
+        label: str,
+        variable,
+        row: int,
+    ):
+        self._create_label(
+            parent,
+            label,
+            row,
+        )
+
+        entry = ctk.CTkEntry(
             parent,
             textvariable=variable,
             width=350,
-            state=state,
-    )
+        )
 
-         entry.grid(
+        entry.grid(
             row=row,
             column=1,
             padx=10,
-            pady=8,
+            pady=7,
             sticky="ew",
-       )
+        )
 
-         return entry
-         
-    def calculate_amount(self, *_):
+        return entry
 
-        amount = BOQFormHelpers.calculate_amount(
-        self.vars["quantity"].get(),
-        self.vars["rate"].get(),
-    )
+    # =====================================================
+    # CALCULATION
+    # =====================================================
 
-        self.vars["amount"].set(
-        BOQFormHelpers.format_amount(amount)
-    )
-        
-    def validate(self):
+    def _bind_calculation_events(self) -> None:
+        self.quantity_var.trace_add(
+            "write",
+            self._on_numeric_change,
+        )
 
-        ok, message = BOQFormValidation.validate_form(
-          self.vars["item_no"].get(),
-          self.vars["description"].get(),
-          self.vars["quantity"].get(),
-          self.vars["rate"].get(),
-    )
+        self.rate_var.trace_add(
+            "write",
+            self._on_numeric_change,
+        )
 
-        if not ok:
-          messagebox.showerror("Validation", message)
-          return False
+    def _on_numeric_change(
+        self,
+        *_,
+    ) -> None:
+        self._update_amount()
+
+    def _to_float(
+        self,
+        value: str,
+    ) -> float:
+        value = str(
+            value or ""
+        ).strip()
+
+        if value == "":
+            return 0.0
+
+        return float(value)
+
+    def _update_amount(self) -> None:
+        try:
+            quantity = self._to_float(
+                self.quantity_var.get()
+            )
+
+            rate = self._to_float(
+                self.rate_var.get()
+            )
+
+            amount = quantity * rate
+
+            self.amount_var.set(
+                f"{amount:,.2f}"
+            )
+
+            self.status_label.configure(
+                text="Amount calculated automatically."
+            )
+
+        except (TypeError, ValueError):
+            self.amount_var.set(
+                "0.00"
+            )
+
+            self.status_label.configure(
+                text="Enter numeric Quantity and Rate."
+            )
+
+    # =====================================================
+    # VALIDATION
+    # =====================================================
+
+    def validate(self) -> bool:
+        if self.project is None:
+            messagebox.showerror(
+                "BOQ Validation",
+                "No project is currently selected.",
+                parent=self,
+            )
+            return False
+
+        item_no = self.item_no_var.get().strip()
+
+        if not item_no:
+            messagebox.showerror(
+                "BOQ Validation",
+                "Item No is required.",
+                parent=self,
+            )
+            return False
+
+        description = (
+            self.description_var.get().strip()
+        )
+
+        if not description:
+            messagebox.showerror(
+                "BOQ Validation",
+                "Description is required.",
+                parent=self,
+            )
+            return False
+
+        unit = self.unit_var.get().strip()
+
+        if not unit:
+            messagebox.showerror(
+                "BOQ Validation",
+                "Unit is required.",
+                parent=self,
+            )
+            return False
+
+        try:
+            quantity = self._to_float(
+                self.quantity_var.get()
+            )
+        except (TypeError, ValueError):
+            messagebox.showerror(
+                "BOQ Validation",
+                "Quantity must be a valid number.",
+                parent=self,
+            )
+            return False
+
+        if quantity <= 0:
+            messagebox.showerror(
+                "BOQ Validation",
+                "Quantity must be greater than zero.",
+                parent=self,
+            )
+            return False
+
+        try:
+            rate = self._to_float(
+                self.rate_var.get()
+            )
+        except (TypeError, ValueError):
+            messagebox.showerror(
+                "BOQ Validation",
+                "Rate must be a valid number.",
+                parent=self,
+            )
+            return False
+
+        if rate < 0:
+            messagebox.showerror(
+                "BOQ Validation",
+                "Rate cannot be negative.",
+                parent=self,
+            )
+            return False
 
         return True
-    def collect_data(self):
 
-        project = CurrentProject.get()
+    # =====================================================
+    # DATA
+    # =====================================================
 
-        if project is None:
+    def collect_data(self) -> BOQ:
+        if self.project is None:
             raise ValueError(
                 "No project selected."
+            )
+
+        quantity = self._to_float(
+            self.quantity_var.get()
+        )
+
+        rate = self._to_float(
+            self.rate_var.get()
+        )
+
+        amount = round(
+            quantity * rate,
+            2,
+        )
+
+        project_id = getattr(
+            self.project,
+            "id",
+            None,
         )
 
         return BOQ(
+            id=(
+                self.boq.id
+                if self.boq is not None
+                else None
+            ),
+            project_id=project_id,
+            item_no=(
+                self.item_no_var
+                .get()
+                .strip()
+            ),
+            description=(
+                self.description_var
+                .get()
+                .strip()
+            ),
+            unit=(
+                self.unit_var
+                .get()
+                .strip()
+            ),
+            quantity=quantity,
+            rate=rate,
+            amount=amount,
+            remarks=(
+                self.remarks_var
+                .get()
+                .strip()
+            ),
+        )
 
-            id=self.boq.id if self.boq else None,
+    # =====================================================
+    # LOAD EDIT DATA
+    # =====================================================
 
-            project_id=project.id,
-
-            item_no=self.vars["item_no"].get().strip(),
-
-            description=self.vars["description"].get().strip(),
-
-            unit=self.vars["unit"].get().strip(),
-
-            quantity=float(
-               self.vars["quantity"].get() or 0
-        ),
-
-            rate=float(
-               self.vars["rate"].get() or 0
-        ),
-
-            amount = BOQFormHelpers.to_float(
-              self.vars["amount"].get()
-        ),
-
-            remarks=self.vars["remarks"].get().strip(),
-    )
     def load_data(
         self,
         boq: BOQ,
-    ):
+    ) -> None:
+        self.item_no_var.set(
+            str(
+                getattr(
+                    boq,
+                    "item_no",
+                    "",
+                )
+            )
+        )
 
-        self.vars["item_no"].set(
-            boq.item_no
-    )
+        self.description_var.set(
+            str(
+                getattr(
+                    boq,
+                    "description",
+                    "",
+                )
+            )
+        )
 
-        self.vars["description"].set(
-           boq.description
-    )
+        unit = str(
+            getattr(
+                boq,
+                "unit",
+                "Nos",
+            )
+        )
 
-        self.vars["unit"].set(
-           boq.unit
-    )
+        if unit:
+            self.unit_var.set(unit)
+        else:
+            self.unit_var.set("Nos")
 
-        self.vars["quantity"].set(
-            str(boq.quantity)
-    )
+        self.quantity_var.set(
+            str(
+                getattr(
+                    boq,
+                    "quantity",
+                    0,
+                )
+            )
+        )
 
-        self.vars["rate"].set(
-           str(boq.rate)
-    )
+        self.rate_var.set(
+            str(
+                getattr(
+                    boq,
+                    "rate",
+                    0,
+                )
+            )
+        )
 
-        self.vars["amount"].set(
-           str(boq.amount)
-    )
+        self.remarks_var.set(
+            str(
+                getattr(
+                    boq,
+                    "remarks",
+                    "",
+                )
+            )
+        )
 
-        self.vars["remarks"].set(
-           boq.remarks
-    )
-    def reset(self):
+        self._update_amount()
 
-        self.vars["item_no"].set("")
+    # =====================================================
+    # SAVE
+    # =====================================================
 
-        self.vars["description"].set("")
+    def save(self) -> None:
+        if not self.validate():
+            return
 
-        self.vars["unit"].set("Nos")
+        try:
+            result = self.collect_data()
 
-        self.vars["quantity"].set("0")
+            # Final model-level validation.
+            result.validate()
 
-        self.vars["rate"].set("0")
+            self.result = result
 
-        self.vars["amount"].set("0.00")
+            self.status_label.configure(
+                text="BOQ item ready to save."
+            )
 
-        self.vars["remarks"].set("")
-    def save_and_new(self):
+            self._close()
 
-        self.save()
+        except Exception as exc:
+            messagebox.showerror(
+                "BOQ Save Error",
+                str(exc),
+                parent=self,
+            )
 
-        if self.result is not None:
+    # =====================================================
+    # CANCEL / CLOSE
+    # =====================================================
 
-          self.result = None
+    def cancel(self) -> None:
+        self.result = None
+        self._close()
 
-          self.reset()
+    def _close(self) -> None:
+        try:
+            self.grab_release()
+        except Exception:
+            pass
+
+        self.destroy()
